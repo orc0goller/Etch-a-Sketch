@@ -1,5 +1,10 @@
+// ELEMENTS
 const grid = document.querySelector(".grid");
+const gridNodes = createGrid();
 
+// EVENT LISTENERS
+// Paints all squares that you touch with mouse
+gridNodes.forEach((node) => node.addEventListener("mouseover", paintSquare));
 
 // Creates grid
 function createGrid(gridSize=16) {
@@ -10,6 +15,11 @@ function createGrid(gridSize=16) {
             grid.appendChild(square);
         }
     }
+    // Returns a nodeList of all squares in the grid
+    return document.querySelectorAll(".grid > *");
 }
 
-createGrid();
+// Paints a square
+function paintSquare() {
+    this.style.cssText += `background-color: black;`;
+}
