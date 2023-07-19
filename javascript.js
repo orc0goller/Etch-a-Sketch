@@ -1,9 +1,12 @@
 const grid = document.querySelector(".grid");
 const slider = document.querySelector("#slider");
 const sliderValue = document.querySelector("#sliderValue");
+const colorPicker = document.querySelector("#colorPicker");
 
 const GRID_DIMENSIONS = grid.clientWidth;
+
 let isMouseDown = false;
+let color = "#000000";
 
 // Create initial grid
 populateGrid();
@@ -12,7 +15,9 @@ slider.addEventListener("change", createGrid);
 slider.addEventListener("input", updateSliderValue);
 document.body.addEventListener("mousedown", () => isMouseDown = true);
 document.body.addEventListener("mouseup", () => isMouseDown = false);
-grid.addEventListener("mousedown", paintNode)
+grid.addEventListener("mousedown", paintNode);
+colorPicker.addEventListener("change", (event) => color = event.target.value);
+
 
 // Fill grid with divs
 function populateGrid(gridSize=16) {
@@ -45,9 +50,9 @@ function getGridSize() {
 
 // Paints a square
 function paintNode(event) {
-    if (isMouseDown || event.type === "mousedown") {
+    if (isMouseDown || (event.type === "mousedown" && event.target !== grid)) {
         // this.style.cssText += `background-color: black;`;
-        event.target.style.cssText += `background-color: black;`;
+        event.target.style.cssText += `background-color: ${color};`;
         // event.stopPropagation();
     }
 }
