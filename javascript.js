@@ -2,7 +2,8 @@ const grid = document.querySelector(".grid");
 const slider = document.querySelector("#slider");
 const sliderValue = document.querySelector("#slider-value");
 const colorPicker = document.querySelector("#color-picker");
-const colorModeButtons = document.querySelectorAll(".settings button");
+const colorModeButtons = document.querySelectorAll(".settings > button");
+const clearBtn = document.querySelector("#clear-btn");
 
 const GRID_DIMENSIONS = grid.clientWidth;
 const colorModes = {isNormal: true, isRainbow: false, isEraser: false, isDarken: false};
@@ -27,6 +28,8 @@ grid.addEventListener("mousedown", paintNode);
 colorPicker.addEventListener("change", (event) => color = event.target.value);
 // Selects coloring mode when one of the buttons is clicked
 colorModeButtons.forEach((Btn) => Btn.addEventListener("click", setColorMode));
+
+clearBtn.addEventListener("click", populateGrid);
 
 // Selects coloring mode based on what button was selected
 function setColorMode(event) {
@@ -78,7 +81,9 @@ function paintNode(event) {
         if (isMouseDown || (event.type === "mousedown" && event.target !== grid)) { // Only paint if holding down mouse button
             let rgb = [];
             rgb = getBackgroundColors(event.target);
+            console.log(rgb);
             rgb = darkenColors(rgb);
+            console.log(rgb);
             event.target.style.cssText += `background-color: rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]});`;
         }
     }
@@ -94,7 +99,8 @@ function getBackgroundColors(node) {
 
 function darkenColors(rgb=[]) {
     for(let i = 0; i < 3; i++) {
-        rgb[i] = Math.floor(rgb[i] * 0.9);
+        rgb[i] -= 26;
+        if (rgb[i] < 0) rgb[i] = 0;
     }
     return rgb;
 }
