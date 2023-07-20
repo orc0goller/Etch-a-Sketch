@@ -3,6 +3,7 @@
     padding: 0;
     margin: 0;
     user-select: none;
+    text-align: center;
 }
 
 body {
@@ -19,13 +20,33 @@ body {
 }
 
 .settings {
+    display: flex;
+    gap: 8px;
     margin-bottom: 20px;
+    align-items: center;
 }
+
+.settingsSlider {
+    display: flex;
+    align-items: center;
+}
+
+input[type="range"] {
+    width: 140px;
+}
+
+label {
+    display: inline-block;
+    width: 2ch;
+}
+
 
 .btn {
     padding: 4px 16px;
-    border-radius: 10%;
+    border-radius: 3px;
     border-style:solid;
+    font-weight: 800;
+    cursor:pointer;
 }
 
 .grid {
