@@ -106,7 +106,7 @@ function getRandomColorValue() {
 }
 
 function updateSliderValue() {
-    sliderValue.textContent = slider.value;
+    sliderValue.textContent = slider.value + " x " + slider.value;
 }
 
 function createGrid() {
