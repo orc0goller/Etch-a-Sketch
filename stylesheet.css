@@ -43,14 +43,25 @@ label {
 
 .btn {
     padding: 4px 16px;
-    border-radius: 3px;
-    border-style:solid;
     font-weight: 800;
     cursor:pointer;
 }
 
-.selected {
-    border-color: green;
+.settings__border {
+    border: 2px solid;
+    border-radius: 4px;
+    border-color: gray;
+}
+
+.settings > button:hover,
+.settings > input:hover {
+    box-shadow: inset 3px 5px 5px gray;
+}
+
+
+.settings--selected {
+    border-color: rgb(0, 182, 0);
+    background-color: gainsboro;
 }
 
 .grid {

@@ -2,7 +2,7 @@ const grid = document.querySelector(".grid");
 const slider = document.querySelector("#slider");
 const sliderValue = document.querySelector("#slider-value");
 const colorPicker = document.querySelector("#color-picker");
-const colorModeButtons = document.querySelectorAll(".settings button.color-mode");
+const colorModeButtons = document.querySelectorAll(".settings button");
 
 const GRID_DIMENSIONS = grid.clientWidth;
 const colorModes = {isNormal: true, isRainbow: false, isEraser: false};
@@ -32,18 +32,22 @@ colorModeButtons.forEach((Btn) => Btn.addEventListener("click", setColorMode));
 function setColorMode(event) {
     Object.keys(colorModes).forEach(key => colorModes[key] = false);
 
+    colorModeButtons.forEach(button => button.classList.remove("settings--selected"));
+    colorPicker.classList.remove("settings--selected");
     let mode = event.target.id;
     switch (mode) {
-        case "rainbow-btn":
-            colorModes.isRainbow = true;
-            break;
         case "normal-btn":
             colorModes.isNormal = true;
+            colorPicker.classList.add("settings--selected");
+            break;
+        case "rainbow-btn":
+            colorModes.isRainbow = true;
             break;
         case "eraser-btn":
             colorModes.isEraser = true;
             break;
-    }  
+    }
+    event.target.classList.add("settings--selected");  
 }
 
 // Paints a square based on what color mode is selected
