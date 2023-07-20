@@ -28,8 +28,8 @@ grid.addEventListener("mousedown", paintNode);
 colorPicker.addEventListener("change", (event) => color = event.target.value);
 // Selects coloring mode when one of the buttons is clicked
 colorModeButtons.forEach((Btn) => Btn.addEventListener("click", setColorMode));
-
-clearBtn.addEventListener("click", populateGrid);
+//
+clearBtn.addEventListener("click", clearGridColor);
 
 // Selects coloring mode based on what button was selected
 function setColorMode(event) {
@@ -81,9 +81,7 @@ function paintNode(event) {
         if (isMouseDown || (event.type === "mousedown" && event.target !== grid)) { // Only paint if holding down mouse button
             let rgb = [];
             rgb = getBackgroundColors(event.target);
-            console.log(rgb);
             rgb = darkenColors(rgb);
-            console.log(rgb);
             event.target.style.cssText += `background-color: rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]});`;
         }
     }
@@ -112,11 +110,11 @@ function populateGrid(gridSize=16) {
 
     for (let squareNumber = 0; squareNumber < squaresInGrid; squareNumber++) {
         const square = document.createElement("div");
-        square.style.cssText = `width:${squareDimension}px;height:${squareDimension}px;border-top: 1px solid black;border-left: 1px solid black;`;
+        square.style.cssText = `width:${squareDimension}px;height:${squareDimension}px;border-top: 1px solid rgb(156, 156, 156);border-left: 1px solid rgb(156, 156, 156);`;
         grid.appendChild(square);
     }
     // Paints squares if mouse pointer enters them
-    let gridNodes = document.querySelectorAll(".grid > *");
+    const gridNodes = document.querySelectorAll(".grid > *");
     gridNodes.forEach((node) => node.addEventListener("mouseenter", paintNode));
     gridNodes.forEach(node => node.style.backgroundColor = "rgb(255, 255, 255)");
 }
@@ -124,6 +122,11 @@ function populateGrid(gridSize=16) {
 // Removes squares in grid
 function eraseGrid() {
     while (grid.firstChild) grid.removeChild(grid.lastChild);
+}
+
+// Set all squares to white background color
+function clearGridColor() {
+    grid.childNodes.forEach(node => node.style.backgroundColor = "rgb(255, 255, 255)");
 }
 
 // Gets user input for the grid dimensions (e.g. 16 for a 16x16 grid)
