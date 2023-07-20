@@ -5,7 +5,7 @@ const colorPicker = document.querySelector("#color-picker");
 const colorModeButtons = document.querySelectorAll(".settings button");
 
 const GRID_DIMENSIONS = grid.clientWidth;
-const colorModes = {isNormal: true, isRainbow: false, isEraser: false};
+const colorModes = {isNormal: true, isRainbow: false, isEraser: false, isDarken: false};
 
 let isMouseDown = false;
 let color = "#000000";
@@ -46,6 +46,9 @@ function setColorMode(event) {
         case "eraser-btn":
             colorModes.isEraser = true;
             break;
+        case "darken-btn":
+            colorModes.isDarken = true;
+            break;
     }
     event.target.classList.add("settings--selected");  
 }
@@ -70,6 +73,30 @@ function paintNode(event) {
             event.target.style.cssText += `background-color: white;`;
         }
     }
+    // Darken
+    else if (colorModes.isDarken) {
+        if (isMouseDown || (event.type === "mousedown" && event.target !== grid)) { // Only paint if holding down mouse button
+            let rgb = [];
+            rgb = getBackgroundColors(event.target);
+            rgb = darkenColors(rgb);
+            event.target.style.cssText += `background-color: rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]});`;
+        }
+    }
+    
+}
+
+function getBackgroundColors(node) {
+    let r = node.style.backgroundColor.match(/\d+/g)[0];
+    let g = node.style.backgroundColor.match(/\d+/g)[1];
+    let b = node.style.backgroundColor.match(/\d+/g)[2];
+    return [r, g, b];
+}
+
+function darkenColors(rgb=[]) {
+    for(let i = 0; i < 3; i++) {
+        rgb[i] = Math.floor(rgb[i] * 0.9);
+    }
+    return rgb;
 }
 
 // Fill grid with divs
@@ -85,6 +112,7 @@ function populateGrid(gridSize=16) {
     // Paints squares if mouse pointer enters them
     let gridNodes = document.querySelectorAll(".grid > *");
     gridNodes.forEach((node) => node.addEventListener("mouseenter", paintNode));
+    gridNodes.forEach(node => node.style.backgroundColor = "rgb(255, 255, 255)");
 }
 
 // Removes squares in grid
