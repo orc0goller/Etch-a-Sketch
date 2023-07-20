@@ -1,9 +1,7 @@
 const grid = document.querySelector(".grid");
 const slider = document.querySelector("#slider");
-const sliderValue = document.querySelector("#sliderValue");
-const colorPicker = document.querySelector("#colorPicker");
-const rainbowBtn = document.querySelector("#rainbowBtn");
-const normalBtn = document.querySelector("#normalBtn");
+const sliderValue = document.querySelector("#slider-value");
+const colorPicker = document.querySelector("#color-picker");
 const colorModeButtons = document.querySelectorAll(".settings button.color-mode");
 
 const GRID_DIMENSIONS = grid.clientWidth;
@@ -30,19 +28,19 @@ colorPicker.addEventListener("change", (event) => color = event.target.value);
 // Selects coloring mode when one of the buttons is clicked
 colorModeButtons.forEach((Btn) => Btn.addEventListener("click", setColorMode));
 
-// Selects coloring mode based on what button was pressed
+// Selects coloring mode based on what button was selected
 function setColorMode(event) {
     Object.keys(colorModes).forEach(key => colorModes[key] = false);
 
     let mode = event.target.id;
     switch (mode) {
-        case "rainbowBtn":
+        case "rainbow-btn":
             colorModes.isRainbow = true;
             break;
-        case "normalBtn":
+        case "normal-btn":
             colorModes.isNormal = true;
             break;
-        case "eraserBtn":
+        case "eraser-btn":
             colorModes.isEraser = true;
             break;
     }  
