@@ -30,11 +30,10 @@ colorPicker.addEventListener("change", (event) => color = event.target.value);
 // Selects coloring mode when one of the buttons is clicked
 colorModeButtons.forEach((Btn) => Btn.addEventListener("click", setColorMode));
 
-
+// Selects coloring mode based on what button was pressed
 function setColorMode(event) {
     Object.keys(colorModes).forEach(key => colorModes[key] = false);
 
-    
     let mode = event.target.id;
     switch (mode) {
         case "rainbowBtn":
@@ -43,7 +42,32 @@ function setColorMode(event) {
         case "normalBtn":
             colorModes.isNormal = true;
             break;
+        case "eraserBtn":
+            colorModes.isEraser = true;
+            break;
     }  
+}
+
+// Paints a square based on what color mode is selected
+function paintNode(event) {
+    // Selected color
+    if (colorModes.isNormal){
+        if (isMouseDown || (event.type === "mousedown" && event.target !== grid)) { // Only paint if holding down mouse button
+            event.target.style.cssText += `background-color: ${color};`;
+        }
+    }
+    // Random color
+    else if (colorModes.isRainbow) {
+        if (isMouseDown || (event.type === "mousedown" && event.target !== grid)) { // Only paint if holding down mouse button
+            event.target.style.cssText += `background-color: rgb(${getRandomColorValue()}, ${getRandomColorValue()}, ${getRandomColorValue()});`;
+        }
+    }
+    // Eraser
+    else if (colorModes.isEraser) {
+        if (isMouseDown || (event.type === "mousedown" && event.target !== grid)) { // Only paint if holding down mouse button
+            event.target.style.cssText += `background-color: white;`;
+        }
+    }
 }
 
 // Fill grid with divs
@@ -73,23 +97,6 @@ function getGridSize() {
         gridSize = 16;
     }
     return gridSize;
-}
-
-// Paints a square based on what color mode is selected
-function paintNode(event) {
-    // Selected color
-    if (colorModes.isNormal){
-        // Only paint if holding down mouse button
-        if (isMouseDown || (event.type === "mousedown" && event.target !== grid)) {
-            event.target.style.cssText += `background-color: ${color};`;
-        }
-    }
-    // Random color
-    else if (colorModes.isRainbow) {
-        if (isMouseDown || (event.type === "mousedown" && event.target !== grid)) {
-            event.target.style.cssText += `background-color: rgb(${getRandomColorValue()}, ${getRandomColorValue()}, ${getRandomColorValue()});`;
-        }
-    }
 }
 
 function getRandomColorValue() {
